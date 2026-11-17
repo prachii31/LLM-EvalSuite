@@ -1,20 +1,61 @@
 # LLM-EvalSuite
-### A Lightweight Framework for Evaluating RAG Chatbot Quality and Security
+### A Lightweight Framework for RAG Chatbot Quality and Security Evaluation
 
-LLM-EvalSuite is a Python-based evaluation framework designed to assess the quality, reliability, and security of Large Language Model (LLM) applications.
+LLM-EvalSuite is a Python-based framework designed to evaluate the quality, reliability, and security of Large Language Model (LLM) applications.
 
-The project uses a fictional banking chatbot, **Nivara Bank**, as the application under test. It evaluates chatbot responses against a golden dataset, measures response quality using DeepEval, and checks security-related behaviour using LLM-based judging.
+The project uses **Nivara Bank**, a fictional banking chatbot built using Retrieval-Augmented Generation (RAG), as its application under test.
 
-The framework generates structured JSON and Markdown reports to make evaluation results easier to inspect and understand.
+It combines functional testing, LLM-based quality evaluation, and security testing to assess chatbot responses against predefined test datasets.
+
+The framework uses DeepEval to evaluate response faithfulness and answer relevancy, while a separate LLM judge evaluates security-related behaviour. It generates structured JSON and Markdown reports to summarize evaluation results.
+
+---
+
+## Project Objectives
+
+- Evaluate the correctness of RAG chatbot responses.
+- Measure whether generated answers are supported by retrieved context.
+- Evaluate the relevance of answers to user questions.
+- Test chatbot behaviour against prompt injection and security-related scenarios.
+- Identify responses that require manual review.
+- Generate automated evaluation reports.
 
 ## Key Features
 
-- **Functional Testing:** Tests chatbot responses against predefined questions and expected behaviour.
-- **Faithfulness Evaluation:** Uses DeepEval to assess whether answers are supported by retrieved context.
-- **Answer Relevancy Evaluation:** Measures how relevant generated answers are to user questions.
-- **Security Testing:** Evaluates behaviour against prompt injection, credential disclosure, privacy violations, and unsafe banking claims.
-- **Automated Scoring:** Calculates functional and security pass rates along with average quality scores.
-- **Report Generation:** Generates JSON and Markdown evaluation reports.
+### 1. Functional Testing
+- Uses a predefined golden dataset.
+- Tests chatbot responses against expected answers and behaviour.
+- Captures generated answers and retrieved context.
+
+### 2. Faithfulness Evaluation
+- Uses DeepEval's Faithfulness metric.
+- Evaluates whether generated answers are supported by the retrieved context.
+- Helps identify unsupported or contradictory claims.
+
+### 3. Answer Relevancy Evaluation
+- Uses DeepEval's Answer Relevancy metric.
+- Evaluates whether chatbot responses address the user's question.
+
+### 4. Security Testing
+Tests chatbot behaviour against scenarios involving:
+- Prompt injection.
+- Sensitive credential disclosure.
+- Customer privacy violations.
+- Unauthorized transaction claims.
+- Unsafe or unsupported financial advice.
+
+### 5. Automated Scoring
+- Calculates functional pass rates.
+- Calculates average faithfulness and answer relevancy scores.
+- Calculates security pass rates.
+- Identifies cases requiring manual review.
+
+### 6. Report Generation
+Generates:
+- JSON reports containing detailed evaluation results.
+- Markdown reports containing readable evaluation summaries.
+
+---
 
 ## Technology Stack
 
@@ -23,7 +64,7 @@ The framework generates structured JSON and Markdown reports to make evaluation 
 | Programming Language | Python |
 | RAG Framework | LangChain |
 | Vector Database | ChromaDB |
-| Embeddings | Google Gemini Embeddings |
+| Document Embeddings | Google Gemini Embeddings |
 | Chatbot LLM | Ollama – Qwen 2.5 3B |
 | Quality Evaluation | DeepEval |
 | Quality Judge Model | Ollama – Qwen 2.5 7B |
@@ -31,42 +72,57 @@ The framework generates structured JSON and Markdown reports to make evaluation 
 | Testing Framework | Pytest |
 | Reports | JSON, Markdown |
 
+**Model configuration:** Chatbot generation and LLM-based judging run locally through Ollama. Document embeddings use Google Gemini through its API.
+
+---
+
 ## System Architecture
 
-### 1. Chatbot Pipeline
+### 1. RAG Chatbot Pipeline
 
-1. Banking documents are loaded from the knowledge base.
-2. Documents are split into smaller chunks.
-3. Gemini embeddings convert the chunks into vector representations.
-4. Chunks are stored in ChromaDB.
-5. A user question is used to retrieve relevant context.
-6. Qwen 2.5 3B generates an answer using the retrieved context.
+The Nivara Bank chatbot follows a Retrieval-Augmented Generation architecture.
+
+1. **Document Ingestion:** Banking policy documents are loaded from the knowledge base.
+2. **Text Splitting:** Documents are divided into smaller chunks using RecursiveCharacterTextSplitter.
+3. **Embedding Generation:** Google Gemini Embeddings converts document chunks into vector representations.
+4. **Vector Storage:** Chunks and their embeddings are stored in ChromaDB.
+5. **Retrieval:** Relevant document chunks are retrieved based on the user's question.
+6. **Response Generation:** Ollama's Qwen 2.5 3B generates an answer using the retrieved context.
 
 ### 2. Evaluation Pipeline
 
-**Functional and quality evaluation:**
+The evaluation framework consists of two main evaluation workflows.
 
-1. Load test cases from the golden dataset.
-2. Execute each question against the Nivara Bank chatbot.
-3. Capture the generated answer and retrieval context.
+**A. Functional and Quality Evaluation**
+
+1. Load test cases from `golden_dataset.json`.
+2. Execute questions against the Nivara Bank chatbot.
+3. Capture generated answers and retrieval context.
 4. Evaluate faithfulness and answer relevancy using DeepEval.
-5. Calculate scores using configured thresholds.
-6. Generate JSON and Markdown reports.
+5. Compare metric scores against configured thresholds.
+6. Identify cases that pass, fail, or require manual review.
 
-**Security evaluation:**
+**B. Security Evaluation**
 
-1. Load security test cases.
-2. Send each test question to the chatbot.
-3. Capture its response.
-4. Evaluate the response against the expected security behaviour.
-5. Record PASS, FAIL, or ERROR verdicts and generate the report.
+1. Load security scenarios from `security_tests.json`.
+2. Send test questions to the chatbot.
+3. Capture chatbot responses and available policy context.
+4. Evaluate responses against expected security behaviour using an LLM judge.
+5. Record security verdicts and reasons.
+
+**C. Report Generation**
+
+The scoring module combines evaluation results and generates JSON and Markdown reports.
+
+---
 
 ## Project Structure
 
 ```text
-AI-Chatbot-Quality-Evaluation/
+LLM-EvalSuite/
 │
 ├── config/
+│   ├── __init__.py
 │   └── config.py
 │
 ├── datasets/
@@ -81,6 +137,7 @@ AI-Chatbot-Quality-Evaluation/
 │
 ├── src/
 │   ├── evaluation/
+│   │   ├── __init__.py
 │   │   ├── runner.py
 │   │   ├── llm_judge.py
 │   │   ├── json_utils.py
@@ -89,9 +146,11 @@ AI-Chatbot-Quality-Evaluation/
 │   │   └── report_generator.py
 │   │
 │   ├── ingestion/
+│   │   ├── __init__.py
 │   │   └── ingest_documents.py
 │   │
 │   ├── rag/
+│   │   ├── __init__.py
 │   │   ├── chatbot.py
 │   │   ├── llm_client.py
 │   │   └── prompt_template.py
@@ -110,48 +169,69 @@ AI-Chatbot-Quality-Evaluation/
 │   ├── test_security.py
 │   └── test_unanswerable.py
 │
-├── reports/
-│   ├── quality_results.json
-│   ├── results_summary.md
-│   └── experiments.md
+├── scripts/
+│   ├── check_chroma.py
+│   ├── check_embeddings.py
+│   └── check_gemini.py
 │
+├── reports/
+│   ├── experiments.md
+│   └── results_summary.md
+│
+├── experiment_deepeval.py
 ├── .env.example
 ├── .gitignore
-├── requirements.txt
 ├── pytest.ini
+├── requirements.txt
+├── README.md
 └── run_all.py
 ```
 
+---
+
 ## Evaluation Metrics
 
-The framework uses the following metrics:
+The framework uses the following evaluation metrics:
 
-| Metric | Purpose |
+| Metric | Description |
 |---|---|
-| Functional Pass Rate | Measures the percentage of functional test cases that pass |
-| Faithfulness | Checks whether answers are supported by retrieved context |
-| Answer Relevancy | Checks whether answers address the user's question |
-| Security Pass Rate | Measures the percentage of security test cases that pass |
+| Functional Pass Rate | Percentage of functional test cases classified as passed |
+| Faithfulness | Measures whether generated answers are supported by retrieved context |
+| Answer Relevancy | Measures how relevant generated answers are to user questions |
+| Security Pass Rate | Percentage of security test cases classified as passed |
 
-The configured quality thresholds are:
+### Configured Thresholds
 
-- Faithfulness: 0.70
-- Answer Relevancy: 0.70
+| Metric | Threshold |
+|---|---:|
+| Faithfulness | 0.70 |
+| Answer Relevancy | 0.70 |
 
-Cases requiring manual review are identified separately rather than being treated as automatic passes.
+Cases with missing metric scores or predefined manual-review flags are not automatically counted as passes.
+
+---
 
 ## Latest Evaluation Results
 
-The following results were obtained from a successful execution of `python run_all.py`.
+The following results were obtained from a successful execution of the complete evaluation pipeline.
 
-| Metric | Result |
+| Evaluation Metric | Result |
 |---|---:|
 | Functional Pass Rate | 68% |
 | Average Faithfulness | 0.90 |
 | Average Answer Relevancy | 0.91 |
 | Security Pass Rate | 100% |
 
-**Note:** These are results from the current evaluation run and test datasets. A 100% security pass rate does not establish that the chatbot is completely secure. Quality scores and flagged cases should also be reviewed before drawing conclusions.
+**Result interpretation:** These results represent one evaluation run against the current datasets. Some functional cases require further investigation or manual review. A 100% security pass rate on this test dataset does not establish that the chatbot is completely secure.
+
+### Generated Reports
+
+After execution, the framework generates:
+
+- `reports/quality_results.json` – Detailed functional, quality, and security evaluation results.
+- `reports/results_summary.md` – Human-readable evaluation summary.
+
+---
 
 ## Installation and Setup
 
@@ -160,16 +240,17 @@ The following results were obtained from a successful execution of `python run_a
 - Python 3.12
 - Git
 - Ollama
-- Google Gemini API key for embeddings
+- Google Gemini API key for document embeddings
 
-### 1. Clone the repository
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/prachii31/LLM-EvalSuite.git
+
 cd LLM-EvalSuite
 ```
 
-### 2. Create a virtual environment
+### 2. Create a Virtual Environment
 
 ```bash
 python -m venv venv
@@ -181,17 +262,17 @@ Activate it on Windows PowerShell:
 .\venv\Scripts\Activate.ps1
 ```
 
-### 3. Install dependencies
+### 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Configure environment variables
+### 4. Configure Environment Variables
 
-Create a `.env` file using `.env.example` as a reference.
+Create a `.env` file in the project root using `.env.example` as a reference.
 
-Add your Gemini API key and the required model configuration.
+Configure the following variables:
 
 ```env
 GEMINI_API_KEY=your_gemini_api_key
@@ -199,32 +280,49 @@ LLM_MODEL=your_chat_model
 EMBEDDING_MODEL=your_embedding_model
 ```
 
-Do not commit your actual `.env` file or API keys to GitHub.
+Use the model names configured by the project.
 
-### 5. Install the Ollama models
+**Important:** The Gemini API key is used for document embeddings. Ollama handles local chatbot generation and LLM-based evaluation.
+
+Never upload your actual `.env` file or API keys to GitHub.
+
+### 5. Install Ollama Models
+
+Install Ollama and pull the models used by the project:
 
 ```bash
 ollama pull qwen2.5:3b
+
 ollama pull qwen2.5:7b
 ```
 
-Make sure Ollama is running before executing the chatbot and evaluation pipeline.
+Ensure the Ollama service is running before starting the chatbot or evaluation pipeline.
 
-### 6. Build the vector database
+### 6. Build the Vector Database
+
+Run the document ingestion module:
 
 ```bash
 python -m src.ingestion.ingest_documents
 ```
 
-### 7. Run the evaluation framework
+This loads the banking policy documents, generates embeddings, and stores them in ChromaDB.
+
+### 7. Run the Evaluation Framework
+
+Execute the complete evaluation pipeline:
 
 ```bash
 python run_all.py
 ```
 
+The framework runs functional, quality, and security evaluations and generates reports in the `reports/` directory.
+
+---
+
 ## Running Tests
 
-Run the Pytest suite:
+Run the test suite using Pytest:
 
 ```bash
 pytest -v
@@ -234,35 +332,51 @@ Run individual test modules:
 
 ```bash
 pytest tests/test_retrieval.py -v
+
 pytest tests/test_answers.py -v
+
 pytest tests/test_security.py -v
+
 pytest tests/test_unanswerable.py -v
+
 pytest tests/test_advice_boundary.py -v
+
+pytest tests/test_runner.py -v
+
+pytest tests/test_judge_sanity.py -v
 ```
 
-## Generated Reports
+Quality evaluation tests use LLM-based judging and can take considerably longer than ordinary unit tests.
 
-After running the evaluation pipeline, reports are generated in the `reports/` directory:
-
-- `quality_results.json` – Detailed functional, quality, and security evaluation results.
-- `results_summary.md` – Human-readable evaluation summary.
-- `experiments.md` – Experiment notes and observations.
+---
 
 ## Design Considerations
 
-- Local Ollama models are used for chatbot generation and LLM-based judging.
-- Gemini embeddings require an API key and are subject to the provider's usage limits.
+- The chatbot uses retrieved policy context to generate answers.
+- Ollama provides local inference for chatbot generation and LLM-based judging.
+- Gemini is used for document embeddings and requires an API key.
+- DeepEval evaluates faithfulness and answer relevancy.
 - Evaluation thresholds are configurable.
-- Cases with missing or unreliable metric scores are not automatically counted as passes.
-- The banking application uses fictional policy information and is intended for testing and demonstration, not real banking use.
+- Missing metric scores and selected cases requiring review are handled separately from automatic passes.
+- Security test verdicts are based on the configured LLM judge and test scenarios.
+- Nivara Bank is a fictional banking application intended for development and evaluation demonstrations, not real banking use.
+
+---
 
 ## Future Improvements
 
-- Expand the golden and security test datasets.
+- Expand functional and security test datasets.
 - Improve consistency of LLM-based evaluation.
 - Add more adversarial and edge-case test scenarios.
 - Introduce regression tracking across evaluation runs.
+- Explore additional evaluation metrics for RAG applications.
+
+---
 
 ## Author
 
-Developed as a hands-on project to explore **AI Quality Engineering, LLM Testing, RAG Evaluation, and LLM Security Testing**.
+Developed as a hands-on project to explore:
+
+**AI Quality Engineering | LLM Testing | RAG Evaluation | LLM Security Testing**
+
+GitHub Repository: https://github.com/prachii31/LLM-EvalSuite

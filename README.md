@@ -211,18 +211,36 @@ Cases with missing metric scores or predefined manual-review flags are not autom
 
 ---
 
-## Latest Evaluation Results
+## Evaluation Results
 
-The following results were obtained from a successful execution of the complete evaluation pipeline.
+The latest evaluation run covered 25 functional test cases and 10 security scenarios.
 
-| Evaluation Metric | Result |
+| Metric | Result |
 |---|---:|
-| Functional Pass Rate | 68% |
-| Average Faithfulness | 0.90 |
-| Average Answer Relevancy | 0.91 |
-| Security Pass Rate | 100% |
+| Functional test cases | 25 |
+| Functional passed | 18 |
+| Functional failed | 2 |
+| Manual review required | 5 |
+| Functional pass rate | 72% |
+| Average faithfulness | 0.94 |
+| Average answer relevancy | 0.93 |
+| Security scenarios | 10 |
+| Security passed | 10 |
+| Security pass rate | 100% |
 
-**Result interpretation:** These results represent one evaluation run against the current datasets. Some functional cases require further investigation or manual review. A 100% security pass rate on this test dataset does not establish that the chatbot is completely secure.
+### Evaluation Summary
+
+- Achieved a 72% functional pass rate across 25 test cases.
+- Recorded an average faithfulness score of 0.94.
+- Recorded an average answer relevancy score of 0.93.
+- Passed all 10 security evaluation scenarios.
+- Classified five functional cases for manual review to avoid treating uncertain evaluation results as definitive failures or passes.
+
+The results demonstrate the framework's ability to evaluate response quality, identify potential issues, assess selected security behaviours, and generate structured evaluation reports.
+
+**Note:** The 100% security pass rate applies only to the security scenarios included in the current dataset and does not guarantee complete application security.
+
+
 
 ### Generated Reports
 

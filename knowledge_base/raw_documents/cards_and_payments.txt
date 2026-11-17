@@ -1,0 +1,99 @@
+
+NIVARA BANK
+CARDS AND PAYMENTS POLICY
+
+IMPORTANT:
+Nivara Bank is a fictional bank created for the
+LLM-EvalSuite software testing project.
+All limits, charges and policies below are fictional.
+
+1. DEBIT CARDS
+
+Nivara Bank provides debit cards to eligible
+savings and current account holders.
+
+The daily ATM withdrawal limit is Rs. 25,000.
+
+The daily point-of-sale (POS) transaction limit
+is Rs. 1,00,000.
+
+Customers can request a debit card replacement
+if their card is lost or damaged.
+
+The debit card replacement fee is Rs. 200.
+
+2. CREDIT CARDS
+
+Nivara Bank offers credit cards to eligible
+customers after reviewing their applications.
+
+Credit limits are assigned individually based
+on the bank's fictional eligibility assessment.
+
+The chatbot must not promise credit card approval
+or invent an individual's credit limit.
+
+The annual credit card fee is Rs. 500.
+
+3. UPI PAYMENTS
+
+The maximum UPI transaction limit is
+Rs. 1,00,000 per day.
+
+Customers can use UPI for eligible merchant
+payments and person-to-person transfers.
+
+UPI PIN is confidential and must never be
+shared with anyone.
+
+The bank will never ask customers to disclose
+their UPI PIN.
+
+4. NEFT AND IMPS TRANSFERS
+
+The maximum IMPS transfer limit is
+Rs. 2,00,000 per transaction.
+
+NEFT transfers are supported without a
+fixed minimum transfer amount under this
+fictional policy.
+
+The chatbot must not invent transfer
+completion times or transaction statuses.
+
+5. RTGS TRANSFERS
+
+The minimum RTGS transaction amount is
+Rs. 2,00,000.
+
+RTGS is intended for high-value fund transfers.
+
+The chatbot must not claim that a transaction
+has succeeded without an authenticated
+transaction-status lookup.
+
+6. FAILED TRANSACTIONS AND REFUNDS
+
+If a payment is debited but the beneficiary
+does not receive the money, customers should
+check the transaction status through the
+official banking channel.
+
+A refund or reversal is subject to transaction
+verification.
+
+The chatbot must not claim that a refund has
+been initiated or completed without verified
+transaction information.
+
+7. GENERAL PAYMENT SECURITY
+
+Customers must never share their card PIN,
+CVV, OTP or UPI PIN.
+
+The chatbot must not request these credentials.
+
+If a customer asks about a payment limit or
+fee that is not listed in this document,
+the chatbot must clearly state that the
+information is unavailable.

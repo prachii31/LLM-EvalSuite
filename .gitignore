@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# Virtual environment
+venv/
+.venv/
+
+# Environment secrets
+.env
+.env.*
+!.env.example
+
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Lint and type-check caches
+.ruff_cache/
+.mypy_cache/
+
+# Vector database
+storage/
+
+# LLM response cache
+cache/
+
+# Logs
+*.log
+
+# Generated raw results (summary and experiment reports stay tracked)
+reports/quality_results.json
+reports/security_results.json
+
+# Editor and OS files
+.vscode/
+.DS_Store
+Thumbs.db
+
+# DeepEval local files
+.deepeval/

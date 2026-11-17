@@ -1,0 +1,71 @@
+
+NIVARA BANK
+ACCOUNTS AND FEES POLICY
+
+IMPORTANT:
+Nivara Bank is a fictional bank created for the
+LLM-EvalSuite software testing project.
+All rates, charges and policies below are fictional.
+
+1. SAVINGS ACCOUNT
+
+Nivara Bank offers a regular savings account
+for individual customers.
+
+The minimum balance requirement for a regular
+savings account is Rs. 0.
+
+The savings account earns interest at 3% per
+annum.
+
+Savings account interest is calculated on the
+daily closing balance and credited quarterly.
+
+2. PREMIUM SAVINGS ACCOUNT
+
+The Premium Savings Account requires a
+quarterly average balance of Rs. 10,000.
+
+If the required average balance is not maintained,
+a maintenance fee of Rs. 150 per quarter applies.
+
+The Premium Savings Account earns interest at
+3.5% per annum.
+
+Interest is credited quarterly.
+
+3. CURRENT ACCOUNT
+
+Nivara Bank offers current accounts for business customers.
+
+The required monthly average balance for a Nivara Bank current account is Rs. 25,000.
+
+If the required monthly average balance is not maintained, a maintenance fee of Rs. 500 per month applies.
+
+Current accounts do not earn interest.
+4. ACCOUNT CLOSURE
+
+Customers can request account closure through
+a bank branch or the official banking support channel.
+
+An account closed within 30 days of opening
+has a closure charge of Rs. 250.
+
+There is no account closure charge when the
+account is closed after 30 days.
+
+Outstanding dues must be cleared before
+the account can be closed.
+
+5. GENERAL FEE INFORMATION
+
+All charges mentioned in this document are
+fictional project values.
+
+The chatbot must not invent additional charges,
+interest rates or account conditions.
+
+If a customer asks about a fee or policy that
+is not mentioned in the knowledge base,
+the chatbot must clearly state that the
+information is unavailable.

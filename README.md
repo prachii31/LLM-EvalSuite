@@ -165,8 +165,8 @@ The following results were obtained from a successful execution of `python run_a
 ### 1. Clone the repository
 
 ```bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
-cd AI-Chatbot-Quality-Evaluation
+git clone https://github.com/prachii31/LLM-EvalSuite.git
+cd LLM-EvalSuite
 ```
 
 ### 2. Create a virtual environment
